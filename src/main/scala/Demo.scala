@@ -1,5 +1,6 @@
-import actors.ActorTest
+import actors.{ActorTest, WordShorternerActor}
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
+import messages.startMessage
 object Demo extends App {
 
   val as:ActorSystem = ActorSystem("TestSystem")
@@ -11,6 +12,9 @@ object Demo extends App {
   actor ! "\\d".r
   actor ! 2.34
 
-  as.terminate
+  val wordShortener1:ActorRef = as.actorOf(Props[WordShorternerActor], "WordShorthener1")
+  val wordShortener2:ActorRef = as.actorOf(Props[WordShorternerActor], "WordShorthener2")
+
+  wordShortener1 ! startMessage("This is a test!", wordShortener2)
 
 }
