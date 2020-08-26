@@ -1,3 +1,4 @@
+import actors.ActorTest
 import akka.actor.{Actor, ActorRef, ActorSystem, Props}
 object Demo extends App {
 
@@ -9,5 +10,7 @@ object Demo extends App {
   actor ! 'a'
   actor ! "\\d".r
   actor ! 2.34
+
+  as.terminate
 
 }
