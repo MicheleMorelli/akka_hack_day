@@ -4,11 +4,13 @@ import messages.questions.Question
 import messages.{AskMessage, startMessage}
 import akka.pattern._
 import akka.util.Timeout
+import akka.remote._
+import akka.actor.Actor._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 
-object Demo extends App {
+object TestDemo extends App {
 
   val as: ActorSystem = ActorSystem("TestSystem")
   val actor: ActorRef = as.actorOf(Props[ActorTest], "TestActor")
@@ -23,6 +25,7 @@ object Demo extends App {
   //  val wordShortener2:ActorRef = as.actorOf(Props[WordShorternerActor], "WordShorthener2")
   //
   //  wordShortener1 ! startMessage("This is a test!", wordShortener2)
+
 
 
   val asker: ActorRef = as.actorOf(Props(ActorAsking("Tom", "Smith", 45)), "asker")
@@ -41,5 +44,8 @@ object Demo extends App {
     a2 <- ans2
   } yield println(s"I received the following answers: \n$a1\n$a2")
 
+
+
+  as.terminate
 
 }
