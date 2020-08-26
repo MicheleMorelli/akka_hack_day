@@ -5,7 +5,7 @@ import messages.{AskMessage, startMessage}
 import akka.pattern._
 import akka.util.Timeout
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 
 object Demo extends App {
@@ -30,7 +30,7 @@ object Demo extends App {
 
   // Timeout is needed for the Ask pattern (using ?)
   implicit val timeout: Timeout = Timeout(2.seconds)
-  implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
+  implicit val ec: ExecutionContext = as.dispatcher
 
   asker ! startMessage("name", responder)
   val ans1: Future[Any] = asker ? AskMessage(Question("age"))
